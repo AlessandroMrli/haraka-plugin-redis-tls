@@ -42,16 +42,18 @@ To enable TLS, you must provide the following configuration :
 ; username=username
 ; password=password
 ; rejectUnauthorized=false #for self-signed certificates
-; ca=/path/to/server.key
-; cert=/path/to/client.crt
-; key=/path/to/client.key
+; ca=/path/to/server.key or base64 encoded string
+; cert=/path/to/client.crt or base64 encoded string
+; key=/path/to/client.key or base64 encoded string
 ```
 
-> To use it properly, if other plugins inherit from haraka-plugin-redis, > you must install it link this in your haraka project's package.json:
-> ...
-> ***"haraka-plugin-redistls": "^2.0.6",***
-> ***"haraka-plugin-redis": "npm:haraka-plugin-redistls@^2.0.6",***
-> ...
+> To use it properly, if other plugins inherit from haraka-plugin-redis, you must install it like this in your haraka project's package.json:
+> ```json
+> 
+> "haraka-plugin-redistls": "^2.0.6",
+> "haraka-plugin-redis": "npm:haraka-plugin-redistls@^2.0.6",
+>```
+
 
 
    

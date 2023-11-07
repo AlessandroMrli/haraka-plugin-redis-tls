@@ -181,6 +181,23 @@ function getUriStr(client, opts) {
   }
   return msg;
 }
+function decodeBase64(str) {
+  return Buffer.from(str, "base64").toString("ascii");
+}
+
+/**
+ * This method is used to decode base64 string or read file from path.
+ * Thus we can provided certifactes encoded in base64 or in path.
+ * @param config path or base 64 encoded string
+ * @returns
+ */
+function readPathOrDecode(config) {
+  if (config.startsWith("/") || config.startsWith("./")) {
+    return fs.readFileSync(config);
+  } else {
+    return decodeBase64(config);
+  }
+}
 
 function setup(opts) {
   const hasTlsUnabled = opts?.socket?.tls === "true";
@@ -190,15 +207,15 @@ function setup(opts) {
 
     opts.socket.tls = true;
     if (opts?.ca) {
-      opts.socket.ca = [fs.readFileSync(opts?.ca)];
+      opts.socket.ca = [readPathOrDecode(opts?.ca)];
       delete opts.ca;
     }
     if (opts?.cert) {
-      opts.socket.cert = fs.readFileSync(opts?.cert);
+      opts.socket.cert = readPathOrDecode(opts?.cert);
       delete opts.cert;
     }
     if (opts?.key) {
-      opts.socket.key = fs.readFileSync(opts?.key);
+      opts.socket.key = readPathOrDecode(opts?.key);
       delete opts.key;
     }
   }
