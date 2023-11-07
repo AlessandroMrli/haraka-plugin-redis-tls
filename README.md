@@ -37,11 +37,11 @@ Options specified in `redis.ini[opts]` are applied to the server config, the pub
 
 ###### TLS Support
 To enable TLS, you must provide the following configuration :
-```
+```ini
 ; tls=true
 ; username=username
 ; password=password
-; rejectUnauthorized=false
+; rejectUnauthorized=false #for self-signed certificates
 ; ca=/path/to/server.key
 ; cert=/path/to/client.crt
 ; key=/path/to/client.key
@@ -49,8 +49,8 @@ To enable TLS, you must provide the following configuration :
 
 > To use it properly, if other plugins inherit from haraka-plugin-redis, > you must install it link this in your haraka project's package.json:
 > ...
-> ***"haraka-plugin-redis-tls": "^2.0.6",***
-> ***"haraka-plugin-redis": "npm:haraka-plugin-redis-tls@^2.0.6",***
+> ***"haraka-plugin-redistls": "^2.0.6",***
+> ***"haraka-plugin-redis": "npm:haraka-plugin-redistls@^2.0.6",***
 > ...
 
 
