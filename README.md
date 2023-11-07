@@ -35,6 +35,21 @@ Publish & Subscribe are DB agnostic and thus have no db setting. If host and por
 
 Options specified in `redis.ini[opts]` are applied to the server config, the pubsub config, AND the configurations of any plugins that inherit this plugin. This is ideal if the redis server requires a password. Specify it once in [opts]. If other redis connections need a different value (such as a unique DB), they must specify it. For plugins, all options are stored in the plugins `[redis]` section of its config file.
 
+###### TLS Support
+To enable TLS, you must provide the following configuration :
+```
+tls=true
+username=username
+password=password
+rejectUnauthorized=false
+ca=/path/to/server.key
+cert=/path/to/client.crt
+key=/path/to/client.key
+```
+
+
+
+
 ## Usage (shared redis)
 
 Use redis in your plugin like so:

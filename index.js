@@ -1,16 +1,17 @@
+/* eslint-disable indent */
 "use strict";
 /* global server */
 
 const redis = require("redis");
-
+const fs = require("fs");
 exports.register = function () {
   this.load_redis_ini();
-
   // another plugin has called us with: inherits('haraka-plugin-redis')
   if (this.name !== "redis") return;
 
   // register when 'redis' is declared in config/plugins
   this.register_hook("init_master", "init_redis_shared");
+
   this.register_hook("init_child", "init_redis_shared");
 };
 
@@ -181,7 +182,31 @@ function getUriStr(client, opts) {
   return msg;
 }
 
+function setup(opts) {
+  const hasTlsUnabled = opts?.socket?.tls === "true";
+  if (hasTlsUnabled) {
+    opts.socket.rejectUnauthorized = opts.rejectUnauthorized !== "false";
+    delete opts.rejectUnauthorized;
+
+    opts.socket.tls = true;
+    if (opts?.ca) {
+      opts.socket.ca = [fs.readFileSync(opts?.ca)];
+      delete opts.ca;
+    }
+    if (opts?.cert) {
+      opts.socket.cert = fs.readFileSync(opts?.cert);
+      delete opts.cert;
+    }
+    if (opts?.key) {
+      opts.socket.key = fs.readFileSync(opts?.key);
+      delete opts.key;
+    }
+  }
+  return opts;
+}
+
 exports.get_redis_client = async function (opts) {
+  setup(opts);
   const client = redis.createClient(opts);
 
   let urlStr;
