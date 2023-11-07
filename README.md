@@ -50,8 +50,8 @@ To enable TLS, you must provide the following configuration :
 > To use it properly, if other plugins inherit from haraka-plugin-redis, you must install it like this in your haraka project's package.json:
 > ```json
 > 
-> "haraka-plugin-redistls": "^2.0.6",
-> "haraka-plugin-redis": "npm:haraka-plugin-redistls@^2.0.6",
+> "haraka-plugin-redistls": "^2.0.7",
+> "haraka-plugin-redis": "npm:haraka-plugin-redistls@^2.0.7",
 >```
 
 
